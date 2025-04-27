@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Average Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black text-amber-300">
+
+  <!-- Navbar -->
+  <nav class="flex justify-between items-center p-6 bg-black">
+    <h1 class="text-3xl font-bold">Average Store</h1>
+    <ul class="flex space-x-6">
+      <li><a href="#home" class="hover:text-amber-400">Home</a></li>
+      <li><a href="#products" class="hover:text-amber-400">Products</a></li>
+      <li><a href="#cart" class="hover:text-amber-400">Cart (<span id="cart-count">0</span>)</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="text-center py-20">
+    <h2 class="text-5xl font-bold mb-4">Welcome to Average Store!</h2>
+    <p class="text-xl">Your one-stop shop for beauty, electronics, gadgets, and more!</p>
+  </section>
+
+  <!-- Products Section -->
+  <section id="products" class="p-10 grid grid-cols-1 md:grid-cols-3 gap-6" id="product-list">
+
+    <!-- Example Product Template (copy this to add more) -->
+    <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+      <img src="https://via.placeholder.com/150" alt="Lipstick" class="mx-auto mb-4">
+      <h3 class="text-2xl mb-2">Lipstick Matte Red</h3>
+      <p class="mb-4">$19.99</p>
+      <button onclick="addToCart('Lipstick Matte Red', 19.99)" class="bg-amber-400 text-black px-4 py-2 rounded hover:bg-amber-300">Add to Cart</button>
+    </div>
+
+    <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+      <img src="https://via.placeholder.com/150" alt="Smartphone" class="mx-auto mb-4">
+      <h3 class="text-2xl mb-2">Android Smartphone</h3>
+      <p class="mb-4">$249.99</p>
+      <button onclick="addToCart('Android Smartphone', 249.99)" class="bg-amber-400 text-black px-4 py-2 rounded hover:bg-amber-300">Add to Cart</button>
+    </div>
+
+    <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+      <img src="https://via.placeholder.com/150" alt="Earbuds" class="mx-auto mb-4">
+      <h3 class="text-2xl mb-2">Wireless Earbuds</h3>
+      <p class="mb-4">$59.99</p>
+      <button onclick="addToCart('Wireless Earbuds', 59.99)" class="bg-amber-400 text-black px-4 py-2 rounded hover:bg-amber-300">Add to Cart</button>
+    </div>
+
+    <!-- Add more products the same way -->
+
+  </section>
+
+  <!-- Cart Section -->
+  <section id="cart" class="text-center py-20">
+    <h2 class="text-4xl font-bold mb-8">Your Cart</h2>
+    <div id="cart-items" class="text-left max-w-2xl mx-auto"></div>
+    <div id="cart-total" class="text-2xl mt-6"></div>
+    <button onclick="checkout()" class="mt-8 bg-amber-400 text-black px-6 py-3 rounded hover:bg-amber-300">Checkout</button>
+  </section>
+
+  <script>
+    let cart = [];
+
+    function addToCart(productName, productPrice) {
+      cart.push({ name: productName, price: productPrice });
+      updateCartDisplay();
+    }
+
+    function updateCartDisplay() {
+      const cartCount = document.getElementById('cart-count');
+      cartCount.textContent = cart.length;
+
+      const cartItems = document.getElementById('cart-items');
+      cartItems.innerHTML = '';
+
+      let total = 0;
+      cart.forEach(item => {
+        cartItems.innerHTML += `<div class="flex justify-between my-2">
+          <span>${item.name}</span>
+          <span>$${item.price.toFixed(2)}</span>
+        </div>`;
+        total += item.price;
+      });
+
+      const cartTotal = document.getElementById('cart-total');
+      cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        alert('Your cart is empty!');
+      } else {
+        alert('Thank you for shopping at Average Store!');
+        cart = [];
+        updateCartDisplay();
+      }
+    }
+  </script>
+
+</body>
+</html>
